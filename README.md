@@ -1,4 +1,4 @@
-#Proposed structure of storing files: 
+#Proposed structure of the project: 
 ```
 PRIM/
 -----api/
@@ -7,12 +7,10 @@ PRIM/
 ---------------20151017/
 ----------raw/
 ---------------20151017/
------grib2/
 requirement.txt
 serer.py
 ```
---------------------------------------------
-#DESCRIPTION:
+####DESCRIPTION:
 **api/**
 everything relates to api services.
 
@@ -25,14 +23,10 @@ store processed files in seperate folders, folder name is in format: YYYYMMDD
 **data/raw/**
 store raw data files, directly downloaded from Meteo France, in seperate folders, folder name is in format: YYYYMMDD
 
-**grib2/**
-code for processing raw data files in grib2 format
-
----------------------------------------------
 #API:
 Use Flask framework
 ##How to run the code
-###Install tools and libraries
+####Install tools and libraries
 You need to install pip, python, git, npm
 > sudo apt-get install python-pip python-dev npm
 
@@ -41,10 +35,16 @@ Install all the necessary Python libraries:
 
 >pip install -r requirements.txt
 
-### Run the API server and static server
+#### Run the API server and static server
 Run the API server:
 > python server.py
 
 Then go to [localhost](http://localhost:5000) to use the website !
+
+####Tool to play with ReST services
+Install the useful tool httpie from https://github.com/jakubroztocil/httpie
+Exemple: 
+>http GET 127.0.0.1:5000/wind/speed/point date=20151017 forecast_time=5 lat=1.177 lon=40.8
+
 
 
