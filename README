@@ -1,4 +1,4 @@
-Proposed structure of storing files: 
+#Proposed structure of storing files: 
 PRIM/
 -----api/
 -----data/
@@ -11,7 +11,7 @@ requirement.txt
 serer.py
 
 --------------------------------------------
-DESCRIPTION:
+#DESCRIPTION:
 api/
 everything relates to api services.
 
@@ -28,7 +28,7 @@ grib2/
 code for processing raw data files in grib2 format
 
 ---------------------------------------------
-API:
+#API:
 Use Flask framework
 ##How to run the code
 ###Install tools and libraries
