@@ -1,3 +1,4 @@
+from api import grb_wind
 import numpy as np
 
 
@@ -8,8 +9,8 @@ def request_data(date, fctime):
 
 
 def get_speed_at_point(date, fctime, lat, lon):
-    data = request_data(date, fctime)
-    val = get_value_at_lat_lon(data, lat, lon)
+    # data = request_data(date, fctime)
+    val = get_value_at_lat_lon(grb_wind, lat, lon)
 
     return val
 

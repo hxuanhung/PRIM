@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, jsonify
 from api import app
 from wind import get_speed_at_point
 
@@ -14,8 +14,8 @@ def get_speed():
 
     date = data.get('date')
     fc_time = data.get('forecast_time')
-    lat = data.get('lat')
-    lon = data.get('lon')
+    lat = float(data.get('lat'))
+    lon = float(data.get('lon'))
 
     speed = get_speed_at_point(date, fc_time, lat, lon)
     return jsonify({"speed": speed})
