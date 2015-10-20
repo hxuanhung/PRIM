@@ -1,6 +1,7 @@
 from api import app
 
-@app.route('/wind/info', methods=['GET','POST'])
+@app.route('/wind/about', methods=['GET','POST'])
 def get_info():
-	app.logger.info("get wind info")
-	return 'Wind info'
+	app.logger.info("Wind service API")
+	return 'Wind service API'
+
