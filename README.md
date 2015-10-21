@@ -44,7 +44,7 @@ Then go to [localhost](http://localhost:5000) to use the website !
 ####Tool to play with ReST services
 Install the useful tool httpie from https://github.com/jakubroztocil/httpie
 Exemple: 
->http GET 127.0.0.1:5000/wind/speed/point date=20151017 forecast_time=5 lat=1.177 lon=40.8
+>http GET 127.0.0.1:5000/wind/speed/point date="2015-10-17 18:00:00" forecast_time="2015-10-17 19:00:00" lat=1.177 lon=40.8
 
-
+###For more details on API services, please read the Wiki
 
