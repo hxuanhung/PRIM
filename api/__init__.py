@@ -1,17 +1,19 @@
 from flask import Flask
-import numpy as np
+import MySQLdb
 
 app = Flask(__name__)
-grb_wind = None
 
+mysql = None
+def connect_db(host, user, pwd, db):
+    global mysql
+    mysql = MySQLdb.connect(host=host, user=user, passwd=pwd, db=db)
+    cursor = mysql.cursor()
+    return cursor
 
-def create_dev_data():
-    csv = np.genfromtxt('data/raw/20151017/OUT.TXT', delimiter=",")
-    global grb_wind
-    grb_wind = csv[:, 4:7]
-
-
-create_dev_data()
+def close_db():
+    if mysql is not None:
+        mysql.close()
+        app.logger.debug("Closing db")
 
 from api import hello
 from api import wind_service
