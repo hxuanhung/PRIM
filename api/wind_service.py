@@ -21,7 +21,12 @@ def get_direction(lat, lon, date, fc_time):
         return jsonify ({"error": "not found"})
     return jsonify({"direction": dir})
 
-
+@app.route('/tcdc/point/<lat>/<lon>/<string:date>/<string:fc_time>', methods=['GET', 'POST'])
+def get_total_cloud_cover(lat, lon, date, fc_time):
+    val = get_tcdc_at_point(date, fc_time, lat, lon)
+    if val is None:
+        return jsonify ({"error": "not found"})
+    return jsonify({"tcdc": val})
 
 
 

@@ -47,3 +47,23 @@ def get_direction_at_point(date, fctime, lat, lon):
     cursor.close()
     close_db()
     return val
+
+def get_tcdc_at_point(date, fctime, lat, lon):
+    # convert date format from yyyy-mm-dd h-m-s to yyyymmddhm (remote seconds)
+    date_str = date.replace('-', '').replace(' ', '').replace(':','')[:-2]
+    database = "AROME_0.025_" + date_str
+    cursor = connect_db('localhost','root','root',database)
+    query = ('SELECT val FROM TCDC WHERE (lat - %s < 0.024) AND (lon - %s) < 0.024 AND validtime= %s')
+    cursor.execute(query,(lat, lon, fctime))
+    result = cursor.fetchall()
+    app.logger.debug(result)
+    if len(result) == 0:
+        return None
+
+    avg_tcdc = 0
+    for val in result:
+        avg_tcdc = avg_tcdc + val[0]
+    val = avg_tcdc / len(result)
+    cursor.close()
+    close_db()
+    return val
