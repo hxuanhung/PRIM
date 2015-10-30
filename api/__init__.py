@@ -18,5 +18,5 @@ def close_db():
         app.logger.debug("Closing db")
 
 from api import hello
-from api import wind_service
-from api import wind
+from api import services
+from api import functions

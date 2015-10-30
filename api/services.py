@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from api import app
-from wind import *
+from functions import *
 
 @app.route('/wind/about', methods=['GET','POST'])
 def get_info():
