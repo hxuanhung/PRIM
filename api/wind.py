@@ -9,23 +9,41 @@ def request_data(date, fctime):
 
 
 def get_speed_at_point(date, fctime, lat, lon):
-    cursor = connect_db('localhost','root','root','meteo')
-    query = ('SELECT val FROM wind_speed WHERE lat = %s AND lon = %s AND validtime= %s')
+    # convert date format from yyyy-mm-dd h-m-s to yyyymmddhm (remote seconds)
+    date_str = date.replace('-', '').replace(' ', '').replace(':','')[:-2]
+    database = "AROME_0.025_" + date_str
+    cursor = connect_db('localhost','root','root',database)
+    query = ('SELECT val FROM wind_speed WHERE (lat - %s < 0.024) AND (lon - %s) < 0.024 AND validtime= %s')
     cursor.execute(query,(lat, lon, fctime))
-    val = cursor.fetchall()[0][0] # get only 1 value instead of an array of another array
+    result = cursor.fetchall()
 
+    if len(result) == 0:
+        return None
+
+    avg_speed = 0
+    for val in result:
+        avg_speed = avg_speed + val[0]
+    val = avg_speed / len(result)
     cursor.close()
+    close_db()
     return val
 
-def find_nearest_idx(array, value):
-    idx = (np.abs(array - value)).argmin()
-    return array[idx]
+def get_direction_at_point(date, fctime, lat, lon):
+    # convert date format from yyyy-mm-dd h-m-s to yyyymmddhm (remote seconds)
+    date_str = date.replace('-', '').replace(' ', '').replace(':','')[:-2]
+    database = "AROME_0.025_" + date_str
+    cursor = connect_db('localhost','root','root',database)
+    query = ('SELECT val FROM wind_direction WHERE (lat - %s < 0.024) AND (lon - %s) < 0.024 AND validtime= %s')
+    cursor.execute(query,(lat, lon, fctime))
+    result = cursor.fetchall()
 
+    if len(result) == 0:
+        return None
 
-def get_value_at_lat_lon(data, lat, lon):
-    row_lat = data[abs(data[:, 0] - lat) < 0.024]
-    row_lon = row_lat[abs(row_lat[:, 1] - lon) < 0.024]
-    print row_lon
-    speed_val = np.average(row_lon[:, 2])
-    print speed_val
-    return speed_val
+    avg_speed = 0
+    for val in result:
+        avg_speed = avg_speed + val[0]
+    val = avg_speed / len(result)
+    cursor.close()
+    close_db()
+    return val
