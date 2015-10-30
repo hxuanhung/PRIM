@@ -28,5 +28,12 @@ def get_total_cloud_cover(lat, lon, date, fc_time):
         return jsonify ({"error": "not found"})
     return jsonify({"tcdc": val})
 
+@app.route('/point/<lat>/<lon>/<string:date>/<string:fc_time>', methods=['GET', 'POST'])
+def get_val_point(lat, lon, date, fc_time):
+    speed = get_speed_at_point(date, fc_time, lat, lon)
+    direction = get_direction_at_point(date, fc_time, lat, lon)
+    tcdc = get_tcdc_at_point(date, fc_time, lat, lon)
 
-
+    return jsonify({"speed": speed,
+                    "direction": direction,
+                    "tcdc": tcdc})

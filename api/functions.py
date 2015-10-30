@@ -13,7 +13,7 @@ def get_speed_at_point(date, fctime, lat, lon):
     date_str = date.replace('-', '').replace(' ', '').replace(':','')[:-2]
     database = "AROME_0.025_" + date_str
     cursor = connect_db('localhost','root','root',database)
-    query = ('SELECT val FROM wind_speed WHERE (lat - %s < 0.024) AND (lon - %s) < 0.024 AND validtime= %s')
+    query = ('SELECT val FROM WIND WHERE (lat - %s < 0.024) AND (lon - %s) < 0.024 AND validtime= %s')
     cursor.execute(query,(lat, lon, fctime))
     result = cursor.fetchall()
 
