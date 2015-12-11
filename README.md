@@ -48,5 +48,10 @@ Exemple:
 
 NOTE: the ReST services might return an errof if it is requested using the address bar from web browser
 
+####To run the script for processing data
+>./script.sh date_du_run
+
+Ex: ./script.sh 20151211
+Note: for the moment, the data is stored at the same level with this script
 ###For more details on API services, please read the Wiki
 
