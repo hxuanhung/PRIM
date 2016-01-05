@@ -1,19 +1,23 @@
 #!/usr/bin/env bash
 
 #DATE_DU_RUN="20151211"
+SECONDS=0
+
 if [ $# -eq 0 ]
   then
-    echo "Please input Date_du_run as an arg. Ex: 20151211"
+    echo "Please input Date_du_run as an arg. Ex: 2015-12-28"
     exit 1
 fi
-DATE_DU_RUN=$1
+
+DATE=$1
+DATE_DU_RUN="${DATE//-}"
 GRILLE="AROME_0.025"
 U_="_"
 SOUS_PAQUET="SP1"
 TIME_DU_RUN="0000"
 POSTFIX=".grib2"
 #PATH="./data/processed/"
-echo $GRILLE$U_$SOUS_PAQUET$U_*$DATE_DU_RUN$TIME_DU_RUN$POSTFIX
+echo $GRILLE$U_$SOUS_PAQUET$U_$DATE_DU_RUN$TIME_DU_RUN$POSTFIX
 
 #cat files
 GRIB_FILES=$GRILLE$U_$SOUS_PAQUET$U_*$DATE_DU_RUN$TIME_DU_RUN$POSTFIX
@@ -23,12 +27,15 @@ if [ ! -d "tmp" ]; then
     # Control will enter here if $DIRECTORY doesn't exist.
     mkdir tmp #different with /tmp/ folder of Linux
 fi
-cat $GRIB_FILES > ./tmp/$MERGED_FILE
+
+cat ./data/$DATE_DU_RUN/$GRIB_FILES > ./tmp/$MERGED_FILE
 
 echo ./tmp/$MERGED_FILE
 
 
-FC_TIME_LIST=("01" "02" "03" "04")
+FC_TIME_LIST=("00" "01" "02" "03" "04" "05" "06" "07" "08" "09" "10" 
+    "11" "12" "13" "14" "15" "16" "17" "18" "19" "20" 
+    "21" "22" "23")
 SHORT_PARA=("WIND" "TCDC")
 LONG_PARA=(":WIND:10 m above ground:" ":TCDC:atmos col:")
 DB=$U_$DATE_DU_RUN
@@ -60,5 +67,9 @@ for i in "${FC_TIME_LIST[@]}"; do   # The quotes are necessary here
     done
 done
 
+#delete folder ./tmp after each run of this script
+rm -r ./tmp
 
+duration=$SECONDS
+echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 
